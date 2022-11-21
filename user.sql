@@ -1,0 +1,9 @@
+INSERT INTO `user` VALUES (1, '张三', '123456');
+INSERT INTO `user` VALUES (2, '李四', '123456');
+INSERT INTO `user` VALUES (3, '王五', '123456');
+INSERT INTO `user` VALUES (4, '先锋', '123456');
+INSERT INTO `user` VALUES (5, 'xxzx', '4QrcOUm6Wau+VuBX8g+IPg==');
+INSERT INTO `user` VALUES (7, '2334310165@qq.com', 'FKNCN0qLz34rsrwsdVJOEg==');
+INSERT INTO `user` VALUES (8, '2334310165@qq.com', 'FKNCN0qLz34rsrwsdVJOEg==');
+INSERT INTO `user` VALUES (9, '2334310165@qq.com', 'FKNCN0qLz34rsrwsdVJOEg==');
+INSERT INTO `user` VALUES (10, '2334310165@qq.com', 'FKNCN0qLz34rsrwsdVJOEg==');
