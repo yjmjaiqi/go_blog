@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="../img/icon_2.png">
+    <title>新浪博客</title>
+    <link href="../css/foot.css" rel="stylesheet" type="text/css">
+    <link href="../css/cbody.css" rel="stylesheet" type="text/css">
+    <link href="../css/banner.css" rel="stylesheet" type="text/css">
+    <link href="../css/nav.css" rel="stylesheet" type="text/css">
+    <link href="../css/css.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="nav">
+    <a class="nav_logo"><img src="../img/logo2.png"></a>
+    <div id="nav_ul">
+        <ul>
+            <li><a class="nav_a" href="###" target="_self">{{.user}}</a></li>
+            <li class="nav_line">|</li>
+            <li><a class="nav_a"  href="###" target="_self">个人中心</a></li>
+            <li class="nav_line">|</li>
+            <li><a class="nav_a"  href="###" target="_self">发博文</a></li>
+            <li class="nav_line">|</li>
+            <li><a class="nav_a"  href="###" target="_self">消息</a></li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="banner">
+    <img id="banner_img" src="../img/banner.png">
+    <div id="banner_text">
+        <a id="banner_text_a" href="#" target="_self">{{.user}}的博客</a><br>
+        <div id="banner_content" >
+            <ul>
+                <li><a href="../userLogin" target="_self">退出登录</a></li>
+                <li class="nav_line">|</li>
+                <li class="nav_line">|</li>
+                <li><a href="../blogs" target="_self">博客圈</a></li>
+                <li>
+                     <form action="/searchBlog" method="post" enctype="multipart/form-data">
+                         <input type="text" style="width: 70px" name="blogname" placeholder="查询博客名">
+                         <input type="submit" value="查询">
+                     </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="cbody">
+    <div class="cbody_left">
+        <div id="gr">
+            <div class="cbody_bar">
+                <span><b>个人资料</b><a class="cbody_bar_span_a" href="###" target="_self">[管理]</a></span>
+            </div>
+            <div id="gr_tou">
+                <img id="gr_touxiang" src="../img/girl.png">
+            </div>
+            <span id="name">{{.user}}</span>
+            <span id="name"><a href="../addArticle" style="color: black">[发表博文]</a></span>
+            <div id="weibo">
+                <span><img id="weibo_icon" src="../img/icon_1.png">微博</span>
+            </div>
+            <hr>
+        </div>
+
+        <div class="panel" id="lx">
+            <div class="cbody_bar">
+                <div>
+                    <span><b>佳期QQ二维码</b><a class="cbody_bar_span_a" href="###" target="_self">[管理]</a></span>
+                    <div id="lx_img">
+                        <img src="../img/erweima(1)(1).png">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel" id="fk">
+            <div class="cbody_bar">
+                <div id="fk_list">
+                    <span><b>博客篇目({{.amount}})(3/页)({{.num}}页)</b><a class="cbody_bar_span_a" href="###" target="_self">[管理]</a></span>
+                    {{range $v := .blog}}
+                    <ul>
+                        <li><img class="fk_img" src="../img/costomer.png">{{$v.BlogName}}<span class="fk_time">{{$v.BlogTime}}</span></li>
+                    </ul>
+                    <hr>
+                    {{end}}<br>
+                    前往第&nbsp;&nbsp;<input type="text" id="num" style="width: 30px">&nbsp;&nbsp;<button onclick="page()">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cbody_right">
+        <div id="bw">
+            <div>
+                <div id="cbody_bar_r">
+                    <span><b>博文</b><a href="###" target="_self">[管理]</a></span>
+                </div>
+            </div>
+
+            <div class="bw_text">
+                {{range $v := .blog}}
+                <span class="title_span"><a class="bw_text_title" href="#">{{$v.BlogName}}</a>({{$v.BlogTime}})
+                    <a href="#"><input type="button" value="[编辑]" class="bw_text_title_bt" target="_self"></a>
+                    <input type="button" value="[删除]" onclick="del({{$v.ID}})" class="bw_text_title_bt" target="_self">
+                    <input type="button" value="[修改万物]" onclick="alter({{$v.ID}})" class="bw_text_title_bt" target="_self">
+                </span>
+                <br />
+                <br>
+                <br>
+                <div onclick="cli({{$v.ID}})">
+                <div class="text_text">{{$v.BlogContent}}</div>
+                </div>
+                <br />
+                <span class="bw_bottom"><a class="bw_bottom_bt" href="###" target="_self">阅读</a>({{$v.Click}}) </span>
+{{/*                <span class="bw_bottom"><a class="bw_bottom_bt_more" href="text.html" target="_self">查看全文>></a></span>*/}}
+                <span>
+                <a class="bw_bottom_bt" id="comment" href="##" target="_self">评论</a><br>
+                <form action="/comment" method="post" enctype="multipart/form-data">
+                    <input type="text" hidden="true" name="id" value={{$v.ID}}>
+                    <input type="text" hidden="true" name="blogname" value={{$v.BlogName}}>
+                    <input type="text" name="comment" placeholder="请在此发表评论">
+                    <input type="submit" value="发送">
+                </form><br>
+                    <span>{{$v.Comment}}<br></span>
+                    <hr class="bw_hr">
+                </span>
+                {{end}}
+{{/*                {{range $c := .comm}}*/}}
+{{/*                    <span>{{$c.Comment}}</span><br>*/}}
+{{/*                {{end}}*/}}
+
+            </div>
+            <hr class="bw_hr">
+
+            <br />
+            <br />
+            <br />
+        </div>
+    </div>
+</div>
+
+
+<div class="foot">
+    <p><a href="###" target="_self">新浪BLOG意见反馈留言板</a><a href="###" target="_self">不良信息反馈</a>电话：4006900000 提示音后按1键（按当地市话标准计费）　欢迎批评指正</p>
+    <ul>
+        <li>新浪简介</li><li>|</li>
+        <li>About Sina</li><li>|</li>
+        <li>广告服务</li><li>|</li>
+        <li>联系我们</li><li>|</li>
+        <li>招聘信息</li><li>|</li>
+        <li>网站律师</li><li>|</li>
+        <li>SINA English</li><li>|</li>
+        <li>会员注册</li><li>|</li>
+        <li>产品答疑</li>
+    </ul>
+    <p>Copyright © 1996 - 2016 SINA Corporation, All Rights Reserved</p>
+    <p>新浪公司 版权所有</p>
+</div>
+<script>
+    //点击量
+    function cli(id){
+        // alert(id)
+        window.location.href = "/blog/"+id
+    }
+    //修改
+    function alter(id){
+        // alert(id)
+        window.location.href = "/alterBlog/"+id
+    };
+    function del(id){
+        // alert(id)
+        window.location.href = "/delete/"+id
+    }
+//    分页
+    function page(){
+        // alert(id)
+        var num = document.getElementById("num").value
+        alter(num)
+        window.location.href = "/page/"+num
+    }
+</script>
+</body>
+</html>
